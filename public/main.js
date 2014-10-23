@@ -6,6 +6,7 @@ function preload(){
   game.load.image('shock', '/img/shocktroopers_toy2.png');
   game.load.image('shock2', '/img/shocktroopers_toy.png');
   game.load.image('dwiz', '/img/dragonwiz.png');
+  game.load.atlasJSONHash('bot', '/img/running_bot.png', '/img/running_bot.json');
 }
 var s4,
     text;
@@ -24,17 +25,25 @@ function create(){
   game.physics.arcade.enable(s4);
   s4.anchor.set(0.5);
 
-  text = "- phaser -\n with a sprinkle of \n pixi dust.";
+  text = "- ROBOT!!!! -\n TWEEN \n YOURSELF.";
   var style = { font: "65px Arial", fill: "#ff0044", align: "center" },
       t = game.add.text(game.world.centerX-300, 0, text, style),
       tween = game.add.tween(s1);
 
   tween.to({ x: 600 }, 6000);
   tween.start();
+
+  var bot = game.add.sprite(500, 500, 'bot');
+  bot.animations.add('run');
+  bot.animations.play('run', 30, true);
+
+  var tween2 = game.add.tween(bot);
+  tween2.to({x:0, y:0}, 6000);
+  tween2.start();
 }
 
 function update(){
-  if (game.physics.arcade.distanceToPointer(s4, game.input.activePointer) > 8){
+  if(game.physics.arcade.distanceToPointer(s4, game.input.activePointer) > 8){
     game.physics.arcade.moveToPointer(s4, 300);
   }else{
     s4.body.velocity.set(0);
